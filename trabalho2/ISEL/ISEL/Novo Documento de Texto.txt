@@ -1,0 +1,2 @@
+csc /t:library Credentials.cs
+csc /r:Credentials.dll App.cs

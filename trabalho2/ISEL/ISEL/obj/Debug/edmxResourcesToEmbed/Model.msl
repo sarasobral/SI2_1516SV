@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ISELModelStoreContainer" CdmEntityContainer="ISELEntities2">
+    <EntitySetMapping Name="Artigo">
+      <EntityTypeMapping TypeName="ISELModel.Artigo">
+        <MappingFragment StoreEntitySet="Artigo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="dataTempo" ColumnName="dataTempo" />
+          <ScalarProperty Name="unCheck" ColumnName="unCheck" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Compra">
+      <EntityTypeMapping TypeName="ISELModel.Compra">
+        <MappingFragment StoreEntitySet="Compra">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="artigoId" ColumnName="artigoId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="dataCompra" ColumnName="dataCompra" />
+          <ScalarProperty Name="localDestino" ColumnName="localDestino" />
+          <ScalarProperty Name="cartaoCredito" ColumnName="cartaoCredito" />
+          <ScalarProperty Name="unCheck" ColumnName="unCheck" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistoricoUtilizador">
+      <EntityTypeMapping TypeName="ISELModel.HistoricoUtilizador">
+        <MappingFragment StoreEntitySet="HistoricoUtilizador">
+          <ScalarProperty Name="dataTempo" ColumnName="dataTempo" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="morada" ColumnName="morada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Leilao">
+      <EntityTypeMapping TypeName="ISELModel.Leilao">
+        <MappingFragment StoreEntitySet="Leilao">
+          <ScalarProperty Name="artigoId" ColumnName="artigoId" />
+          <ScalarProperty Name="licitacaoMin" ColumnName="licitacaoMin" />
+          <ScalarProperty Name="valorMin" ColumnName="valorMin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Licitacao">
+      <EntityTypeMapping TypeName="ISELModel.Licitacao">
+        <MappingFragment StoreEntitySet="Licitacao">
+          <ScalarProperty Name="artigoId" ColumnName="artigoId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="dataHora" ColumnName="dataHora" />
+          <ScalarProperty Name="preco" ColumnName="preco" />
+          <ScalarProperty Name="unCheck" ColumnName="unCheck" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Porte">
+      <EntityTypeMapping TypeName="ISELModel.Porte">
+        <MappingFragment StoreEntitySet="Porte">
+          <ScalarProperty Name="moradaOrigem" ColumnName="moradaOrigem" />
+          <ScalarProperty Name="moradaDestino" ColumnName="moradaDestino" />
+          <ScalarProperty Name="preco" ColumnName="preco" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Utilizador">
+      <EntityTypeMapping TypeName="ISELModel.Utilizador">
+        <MappingFragment StoreEntitySet="Utilizador">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="morada" ColumnName="morada" />
+          <ScalarProperty Name="palavraPasse" ColumnName="palavraPasse" />
+          <ScalarProperty Name="unCheck" ColumnName="unCheck" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Venda">
+      <EntityTypeMapping TypeName="ISELModel.Venda">
+        <MappingFragment StoreEntitySet="Venda">
+          <ScalarProperty Name="artigoId" ColumnName="artigoId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="dataInicio" ColumnName="dataInicio" />
+          <ScalarProperty Name="dataFim" ColumnName="dataFim" />
+          <ScalarProperty Name="localOrigem" ColumnName="localOrigem" />
+          <ScalarProperty Name="condicao" ColumnName="condicao" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="unCheck" ColumnName="unCheck" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VendaDirecta">
+      <EntityTypeMapping TypeName="ISELModel.VendaDirecta">
+        <MappingFragment StoreEntitySet="VendaDirecta">
+          <ScalarProperty Name="artigoId" ColumnName="artigoId" />
+          <ScalarProperty Name="precoVenda" ColumnName="precoVenda" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="leilaoNaoConcluido">
+      <EntityTypeMapping TypeName="ISELModel.leilaoNaoConcluido">
+        <MappingFragment StoreEntitySet="leilaoNaoConcluido">
+          <ScalarProperty Name="lid" ColumnName="lid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionName="ISELModel.Store.nLicitacao" FunctionImportName="nLicitacao">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ISELModel.nLicitacao_Result">
+          <ScalarProperty Name="artigoId" ColumnName="artigoId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="dataHora" ColumnName="dataHora" />
+          <ScalarProperty Name="preco" ColumnName="preco" />
+          <ScalarProperty Name="unCheck" ColumnName="unCheck" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="ISELModel.Store.valorLicit" FunctionImportName="valorLicit">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ISELModel.valorLicit_Result">
+          <ScalarProperty Name="artigoId" ColumnName="artigoId" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="preco" ColumnName="preco" />
+          <ScalarProperty Name="dataHora" ColumnName="dataHora" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="apagarArtigo" FunctionName="ISELModel.Store.apagarArtigo" />
+    <FunctionImportMapping FunctionImportName="apagarLocal" FunctionName="ISELModel.Store.apagarLocal" />
+    <FunctionImportMapping FunctionImportName="apagarUtilizador" FunctionName="ISELModel.Store.apagarUtilizador" />
+    <FunctionImportMapping FunctionImportName="atualizarArtigo" FunctionName="ISELModel.Store.atualizarArtigo" />
+    <FunctionImportMapping FunctionImportName="atualizarLocal" FunctionName="ISELModel.Store.atualizarLocal" />
+    <FunctionImportMapping FunctionImportName="atualizarUtilizador" FunctionName="ISELModel.Store.atualizarUtilizador" />
+    <FunctionImportMapping FunctionImportName="efetuarCompraDireta" FunctionName="ISELModel.Store.efetuarCompraDireta" />
+    <FunctionImportMapping FunctionImportName="efetuarLeilao" FunctionName="ISELModel.Store.efetuarLeilao" />
+    <FunctionImportMapping FunctionImportName="inserirArtigo" FunctionName="ISELModel.Store.inserirArtigo" />
+    <FunctionImportMapping FunctionImportName="inserirLicitacao" FunctionName="ISELModel.Store.inserirLicitacao" />
+    <FunctionImportMapping FunctionImportName="inserirLocal" FunctionName="ISELModel.Store.inserirLocal" />
+    <FunctionImportMapping FunctionImportName="inserirUtilizador" FunctionName="ISELModel.Store.inserirUtilizador" />
+    <FunctionImportMapping FunctionImportName="removerLicitacao" FunctionName="ISELModel.Store.removerLicitacao" />
+    <FunctionImportMapping FunctionImportName="valuePorte" FunctionName="ISELModel.Store.valuePorte" />
+    <FunctionImportMapping FunctionImportName="verificarPp" FunctionName="ISELModel.Store.verificarPp" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,22 @@
+<auctions>
+  <auction id="A2">
+    <info>
+      <minimumBid>1,0000</minimumBid>
+      <reservationPrice>20,0000</reservationPrice>
+      <initialDate>01/03/2016 00:00:00</initialDate>
+    </info>
+    <bids>
+      <bid userid="licit1" datetime="24/06/2016 15:57:42" />
+    </bids>
+  </auction>
+  <auction id="A4">
+    <info>
+      <minimumBid>2,0000</minimumBid>
+      <reservationPrice>30,0000</reservationPrice>
+      <initialDate>01/03/2016 00:00:00</initialDate>
+    </info>
+    <bids>
+      <bid userid="licit1" datetime="24/06/2016 17:50:00" />
+    </bids>
+  </auction>
+</auctions>

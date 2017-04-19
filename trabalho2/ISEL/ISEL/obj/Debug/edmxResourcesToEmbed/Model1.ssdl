@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ISELModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Artigo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dataTempo" Type="datetime" Nullable="false" />
+    <Property Name="unCheck" Type="bit" />
+  </EntityType>
+  <EntityType Name="Compra">
+    <Key>
+      <PropertyRef Name="codigo" />
+    </Key>
+    <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="artigoId" Type="int" />
+    <Property Name="email" Type="varchar" MaxLength="30" />
+    <Property Name="dataCompra" Type="datetime" Nullable="false" />
+    <Property Name="localDestino" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="cartaoCredito" Type="int" Nullable="false" />
+    <Property Name="unCheck" Type="bit" />
+  </EntityType>
+  <EntityType Name="HistoricoUtilizador">
+    <Key>
+      <PropertyRef Name="dataTempo" />
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="dataTempo" Type="datetime" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="morada" Type="varchar" MaxLength="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Leilao">
+    <Key>
+      <PropertyRef Name="artigoId" />
+    </Key>
+    <Property Name="artigoId" Type="int" Nullable="false" />
+    <Property Name="licitacaoMin" Type="money" Nullable="false" />
+    <Property Name="valorMin" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Licitacao">
+    <Key>
+      <PropertyRef Name="artigoId" />
+      <PropertyRef Name="email" />
+      <PropertyRef Name="dataHora" />
+    </Key>
+    <Property Name="artigoId" Type="int" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="dataHora" Type="datetime" Nullable="false" />
+    <Property Name="preco" Type="money" Nullable="false" />
+    <Property Name="unCheck" Type="bit" />
+  </EntityType>
+  <EntityType Name="Porte">
+    <Key>
+      <PropertyRef Name="moradaOrigem" />
+      <PropertyRef Name="moradaDestino" />
+    </Key>
+    <Property Name="moradaOrigem" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="moradaDestino" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="preco" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Utilizador">
+    <Key>
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="50" />
+    <Property Name="morada" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="palavraPasse" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="unCheck" Type="bit" />
+  </EntityType>
+  <EntityType Name="Venda">
+    <Key>
+      <PropertyRef Name="artigoId" />
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="artigoId" Type="int" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="dataInicio" Type="datetime" Nullable="false" />
+    <Property Name="dataFim" Type="datetime" Nullable="false" />
+    <Property Name="localOrigem" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="condicao" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="20" />
+    <Property Name="unCheck" Type="bit" />
+  </EntityType>
+  <EntityType Name="VendaDirecta">
+    <Key>
+      <PropertyRef Name="artigoId" />
+    </Key>
+    <Property Name="artigoId" Type="int" Nullable="false" />
+    <Property Name="precoVenda" Type="money" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ISEL.dbo.leilaoNaoConcluido' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="leilaoNaoConcluido">
+    <Key>
+      <PropertyRef Name="lid" />
+    </Key>
+    <Property Name="lid" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Historico__email__173876EA">
+    <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="1" />
+    <End Role="HistoricoUtilizador" Type="Self.HistoricoUtilizador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="HistoricoUtilizador">
+        <PropertyRef Name="email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leilao__artigoId__1DE57479">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="1" />
+    <End Role="Leilao" Type="Self.Leilao" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Leilao">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VendaDire__artig__21B6055D">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="1" />
+    <End Role="VendaDirecta" Type="Self.VendaDirecta" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="VendaDirecta">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk1_emailUtilizador">
+    <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="1" />
+    <End Role="Venda" Type="Self.Venda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="Venda">
+        <PropertyRef Name="email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk1_idArtigo">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="1" />
+    <End Role="Venda" Type="Self.Venda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Venda">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk2_emailUtilizador">
+    <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="1" />
+    <End Role="Licitacao" Type="Self.Licitacao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="Licitacao">
+        <PropertyRef Name="email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk2_idArtigo">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="1" />
+    <End Role="Licitacao" Type="Self.Licitacao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Licitacao">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk3_emailUtilizador">
+    <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="0..1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk3_idArtigo">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="0..1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="apagarArtigo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="artigoId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="apagarLocal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="local" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="apagarUtilizador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="atualizarArtigo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="update1" Type="int" Mode="In" />
+    <Parameter Name="artigoId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="atualizarLocal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="preco" Type="money" Mode="In" />
+    <Parameter Name="locOrigem" Type="varchar" Mode="In" />
+    <Parameter Name="locDestino" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="atualizarUtilizador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="pp" Type="varchar" Mode="In" />
+    <Parameter Name="nome" Type="varchar" Mode="In" />
+    <Parameter Name="morada" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="efetuarCompraDireta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="data" Type="datetime" Mode="In" />
+    <Parameter Name="locDest" Type="varchar" Mode="In" />
+    <Parameter Name="cc" Type="int" Mode="In" />
+    <Parameter Name="artigoId" Type="int" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="efetuarLeilao" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="data" Type="datetime" Mode="In" />
+    <Parameter Name="locDest" Type="varchar" Mode="In" />
+    <Parameter Name="cc" Type="int" Mode="In" />
+    <Parameter Name="artigoId" Type="int" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="inserirArtigo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="data" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="inserirLicitacao" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="data" Type="datetime" Mode="In" />
+    <Parameter Name="preco" Type="money" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="artigoId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="inserirLocal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="preco" Type="money" Mode="In" />
+    <Parameter Name="locOrigem" Type="varchar" Mode="In" />
+    <Parameter Name="locDestino" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="inserirUtilizador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="pp" Type="varchar" Mode="In" />
+    <Parameter Name="nome" Type="varchar" Mode="In" />
+    <Parameter Name="morada" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="nLicitacao" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="n" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="artigoId" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="dataHora" Type="datetime" Nullable="false" />
+          <Property Name="preco" Type="money" Nullable="false" />
+          <Property Name="unCheck" Type="bit" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="removerLicitacao" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="artigoId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="valorLicit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="artigoId" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="preco" Type="money" Nullable="false" />
+          <Property Name="dataHora" Type="datetime" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="valuePorte" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="locOrigem" Type="varchar" Mode="In" />
+    <Parameter Name="locDestino" Type="varchar" Mode="In" />
+    <Parameter Name="valorPorte" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="verificarPp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="pp" Type="varchar" Mode="In" />
+    <Parameter Name="res" Type="int" Mode="InOut" />
+  </Function>
+  <EntityContainer Name="ISELModelStoreContainer">
+    <EntitySet Name="Artigo" EntityType="Self.Artigo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Compra" EntityType="Self.Compra" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HistoricoUtilizador" EntityType="Self.HistoricoUtilizador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Leilao" EntityType="Self.Leilao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Licitacao" EntityType="Self.Licitacao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Porte" EntityType="Self.Porte" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Utilizador" EntityType="Self.Utilizador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Venda" EntityType="Self.Venda" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VendaDirecta" EntityType="Self.VendaDirecta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="leilaoNaoConcluido" EntityType="Self.leilaoNaoConcluido" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [leilaoNaoConcluido].[lid] AS [lid]
+    FROM [dbo].[leilaoNaoConcluido] AS [leilaoNaoConcluido]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Historico__email__173876EA" Association="Self.FK__Historico__email__173876EA">
+      <End Role="Utilizador" EntitySet="Utilizador" />
+      <End Role="HistoricoUtilizador" EntitySet="HistoricoUtilizador" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leilao__artigoId__1DE57479" Association="Self.FK__Leilao__artigoId__1DE57479">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="Leilao" EntitySet="Leilao" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VendaDire__artig__21B6055D" Association="Self.FK__VendaDire__artig__21B6055D">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="VendaDirecta" EntitySet="VendaDirecta" />
+    </AssociationSet>
+    <AssociationSet Name="fk1_emailUtilizador" Association="Self.fk1_emailUtilizador">
+      <End Role="Utilizador" EntitySet="Utilizador" />
+      <End Role="Venda" EntitySet="Venda" />
+    </AssociationSet>
+    <AssociationSet Name="fk1_idArtigo" Association="Self.fk1_idArtigo">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="Venda" EntitySet="Venda" />
+    </AssociationSet>
+    <AssociationSet Name="fk2_emailUtilizador" Association="Self.fk2_emailUtilizador">
+      <End Role="Utilizador" EntitySet="Utilizador" />
+      <End Role="Licitacao" EntitySet="Licitacao" />
+    </AssociationSet>
+    <AssociationSet Name="fk2_idArtigo" Association="Self.fk2_idArtigo">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="Licitacao" EntitySet="Licitacao" />
+    </AssociationSet>
+    <AssociationSet Name="fk3_emailUtilizador" Association="Self.fk3_emailUtilizador">
+      <End Role="Utilizador" EntitySet="Utilizador" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+    <AssociationSet Name="fk3_idArtigo" Association="Self.fk3_idArtigo">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

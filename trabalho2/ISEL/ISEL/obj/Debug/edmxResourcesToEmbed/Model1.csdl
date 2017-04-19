@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ISELModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <ComplexType Name="nLicitacao_Result">
+    <Property Name="artigoId" Type="Int32" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dataHora" Type="DateTime" Nullable="false" />
+    <Property Name="preco" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="unCheck" Type="Boolean" />
+  </ComplexType>
+  <ComplexType Name="valorLicit_Result">
+    <Property Name="artigoId" Type="Int32" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="preco" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="dataHora" Type="DateTime" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="Artigo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dataTempo" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="unCheck" Type="Boolean" />
+    <NavigationProperty Name="Leilao" Relationship="Self.FK__Leilao__artigoId__1DE57479" FromRole="Artigo" ToRole="Leilao" />
+    <NavigationProperty Name="VendaDirecta" Relationship="Self.FK__VendaDire__artig__21B6055D" FromRole="Artigo" ToRole="VendaDirecta" />
+    <NavigationProperty Name="Venda" Relationship="Self.fk1_idArtigo" FromRole="Artigo" ToRole="Venda" />
+    <NavigationProperty Name="Licitacao" Relationship="Self.fk2_idArtigo" FromRole="Artigo" ToRole="Licitacao" />
+    <NavigationProperty Name="Compra" Relationship="Self.fk3_idArtigo" FromRole="Artigo" ToRole="Compra" />
+  </EntityType>
+  <EntityType Name="Compra">
+    <Key>
+      <PropertyRef Name="codigo" />
+    </Key>
+    <Property Name="codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="artigoId" Type="Int32" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="dataCompra" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="localDestino" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cartaoCredito" Type="Int32" Nullable="false" />
+    <Property Name="unCheck" Type="Boolean" />
+    <NavigationProperty Name="Artigo" Relationship="Self.fk3_idArtigo" FromRole="Compra" ToRole="Artigo" />
+    <NavigationProperty Name="Utilizador" Relationship="Self.fk3_emailUtilizador" FromRole="Compra" ToRole="Utilizador" />
+  </EntityType>
+  <EntityType Name="HistoricoUtilizador">
+    <Key>
+      <PropertyRef Name="dataTempo" />
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="dataTempo" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="morada" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Utilizador" Relationship="Self.FK__Historico__email__173876EA" FromRole="HistoricoUtilizador" ToRole="Utilizador" />
+  </EntityType>
+  <EntityType Name="Leilao">
+    <Key>
+      <PropertyRef Name="artigoId" />
+    </Key>
+    <Property Name="artigoId" Type="Int32" Nullable="false" />
+    <Property Name="licitacaoMin" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="valorMin" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Artigo" Relationship="Self.FK__Leilao__artigoId__1DE57479" FromRole="Leilao" ToRole="Artigo" />
+  </EntityType>
+  <EntityType Name="Licitacao">
+    <Key>
+      <PropertyRef Name="artigoId" />
+      <PropertyRef Name="email" />
+      <PropertyRef Name="dataHora" />
+    </Key>
+    <Property Name="artigoId" Type="Int32" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dataHora" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="preco" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="unCheck" Type="Boolean" />
+    <NavigationProperty Name="Artigo" Relationship="Self.fk2_idArtigo" FromRole="Licitacao" ToRole="Artigo" />
+    <NavigationProperty Name="Utilizador" Relationship="Self.fk2_emailUtilizador" FromRole="Licitacao" ToRole="Utilizador" />
+  </EntityType>
+  <EntityType Name="Porte">
+    <Key>
+      <PropertyRef Name="moradaOrigem" />
+      <PropertyRef Name="moradaDestino" />
+    </Key>
+    <Property Name="moradaOrigem" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="moradaDestino" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="preco" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Utilizador">
+    <Key>
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="morada" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="palavraPasse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="unCheck" Type="Boolean" />
+    <NavigationProperty Name="Compra" Relationship="Self.fk3_emailUtilizador" FromRole="Utilizador" ToRole="Compra" />
+    <NavigationProperty Name="HistoricoUtilizador" Relationship="Self.FK__Historico__email__173876EA" FromRole="Utilizador" ToRole="HistoricoUtilizador" />
+    <NavigationProperty Name="Licitacao" Relationship="Self.fk2_emailUtilizador" FromRole="Utilizador" ToRole="Licitacao" />
+    <NavigationProperty Name="Venda" Relationship="Self.fk1_emailUtilizador" FromRole="Utilizador" ToRole="Venda" />
+  </EntityType>
+  <EntityType Name="Venda">
+    <Key>
+      <PropertyRef Name="artigoId" />
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="artigoId" Type="Int32" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dataInicio" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="dataFim" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="localOrigem" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="condicao" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="descricao" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="unCheck" Type="Boolean" />
+    <NavigationProperty Name="Artigo" Relationship="Self.fk1_idArtigo" FromRole="Venda" ToRole="Artigo" />
+    <NavigationProperty Name="Utilizador" Relationship="Self.fk1_emailUtilizador" FromRole="Venda" ToRole="Utilizador" />
+  </EntityType>
+  <EntityType Name="VendaDirecta">
+    <Key>
+      <PropertyRef Name="artigoId" />
+    </Key>
+    <Property Name="artigoId" Type="Int32" Nullable="false" />
+    <Property Name="precoVenda" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Artigo" Relationship="Self.FK__VendaDire__artig__21B6055D" FromRole="VendaDirecta" ToRole="Artigo" />
+  </EntityType>
+  <EntityType Name="leilaoNaoConcluido">
+    <Key>
+      <PropertyRef Name="lid" />
+    </Key>
+    <Property Name="lid" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Leilao__artigoId__1DE57479">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="1" />
+    <End Role="Leilao" Type="Self.Leilao" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Leilao">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VendaDire__artig__21B6055D">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="1" />
+    <End Role="VendaDirecta" Type="Self.VendaDirecta" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="VendaDirecta">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk1_idArtigo">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="1" />
+    <End Role="Venda" Type="Self.Venda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Venda">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk2_idArtigo">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="1" />
+    <End Role="Licitacao" Type="Self.Licitacao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Licitacao">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk3_idArtigo">
+    <End Role="Artigo" Type="Self.Artigo" Multiplicity="0..1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artigo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="artigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk3_emailUtilizador">
+    <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="0..1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Historico__email__173876EA">
+    <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="1" />
+    <End Role="HistoricoUtilizador" Type="Self.HistoricoUtilizador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="HistoricoUtilizador">
+        <PropertyRef Name="email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk2_emailUtilizador">
+    <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="1" />
+    <End Role="Licitacao" Type="Self.Licitacao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="Licitacao">
+        <PropertyRef Name="email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk1_emailUtilizador">
+    <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="1" />
+    <End Role="Venda" Type="Self.Venda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="email" />
+      </Principal>
+      <Dependent Role="Venda">
+        <PropertyRef Name="email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ISELEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Artigo" EntityType="Self.Artigo" />
+    <EntitySet Name="Compra" EntityType="Self.Compra" />
+    <EntitySet Name="HistoricoUtilizador" EntityType="Self.HistoricoUtilizador" />
+    <EntitySet Name="Leilao" EntityType="Self.Leilao" />
+    <EntitySet Name="Licitacao" EntityType="Self.Licitacao" />
+    <EntitySet Name="Porte" EntityType="Self.Porte" />
+    <EntitySet Name="Utilizador" EntityType="Self.Utilizador" />
+    <EntitySet Name="Venda" EntityType="Self.Venda" />
+    <EntitySet Name="VendaDirecta" EntityType="Self.VendaDirecta" />
+    <EntitySet Name="leilaoNaoConcluido" EntityType="Self.leilaoNaoConcluido" />
+    <AssociationSet Name="FK__Leilao__artigoId__1DE57479" Association="Self.FK__Leilao__artigoId__1DE57479">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="Leilao" EntitySet="Leilao" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VendaDire__artig__21B6055D" Association="Self.FK__VendaDire__artig__21B6055D">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="VendaDirecta" EntitySet="VendaDirecta" />
+    </AssociationSet>
+    <AssociationSet Name="fk1_idArtigo" Association="Self.fk1_idArtigo">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="Venda" EntitySet="Venda" />
+    </AssociationSet>
+    <AssociationSet Name="fk2_idArtigo" Association="Self.fk2_idArtigo">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="Licitacao" EntitySet="Licitacao" />
+    </AssociationSet>
+    <AssociationSet Name="fk3_idArtigo" Association="Self.fk3_idArtigo">
+      <End Role="Artigo" EntitySet="Artigo" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+    <AssociationSet Name="fk3_emailUtilizador" Association="Self.fk3_emailUtilizador">
+      <End Role="Utilizador" EntitySet="Utilizador" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Historico__email__173876EA" Association="Self.FK__Historico__email__173876EA">
+      <End Role="Utilizador" EntitySet="Utilizador" />
+      <End Role="HistoricoUtilizador" EntitySet="HistoricoUtilizador" />
+    </AssociationSet>
+    <AssociationSet Name="fk2_emailUtilizador" Association="Self.fk2_emailUtilizador">
+      <End Role="Utilizador" EntitySet="Utilizador" />
+      <End Role="Licitacao" EntitySet="Licitacao" />
+    </AssociationSet>
+    <AssociationSet Name="fk1_emailUtilizador" Association="Self.fk1_emailUtilizador">
+      <End Role="Utilizador" EntitySet="Utilizador" />
+      <End Role="Venda" EntitySet="Venda" />
+    </AssociationSet>
+    <FunctionImport Name="nLicitacao" ReturnType="Collection(ISELModel.nLicitacao_Result)" IsComposable="true">
+      <Parameter Name="n" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="valorLicit" ReturnType="Collection(ISELModel.valorLicit_Result)" IsComposable="true">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="apagarArtigo">
+      <Parameter Name="artigoId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="apagarLocal">
+      <Parameter Name="local" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="apagarUtilizador">
+      <Parameter Name="email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="atualizarArtigo">
+      <Parameter Name="update1" Mode="In" Type="Int32" />
+      <Parameter Name="artigoId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="atualizarLocal">
+      <Parameter Name="preco" Mode="In" Type="Decimal" />
+      <Parameter Name="locOrigem" Mode="In" Type="String" />
+      <Parameter Name="locDestino" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="atualizarUtilizador">
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="pp" Mode="In" Type="String" />
+      <Parameter Name="nome" Mode="In" Type="String" />
+      <Parameter Name="morada" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="efetuarCompraDireta">
+      <Parameter Name="data" Mode="In" Type="DateTime" />
+      <Parameter Name="locDest" Mode="In" Type="String" />
+      <Parameter Name="cc" Mode="In" Type="Int32" />
+      <Parameter Name="artigoId" Mode="In" Type="Int32" />
+      <Parameter Name="email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="efetuarLeilao">
+      <Parameter Name="data" Mode="In" Type="DateTime" />
+      <Parameter Name="locDest" Mode="In" Type="String" />
+      <Parameter Name="cc" Mode="In" Type="Int32" />
+      <Parameter Name="artigoId" Mode="In" Type="Int32" />
+      <Parameter Name="email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="inserirArtigo">
+      <Parameter Name="data" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="inserirLicitacao">
+      <Parameter Name="data" Mode="In" Type="DateTime" />
+      <Parameter Name="preco" Mode="In" Type="Decimal" />
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="artigoId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="inserirLocal">
+      <Parameter Name="preco" Mode="In" Type="Decimal" />
+      <Parameter Name="locOrigem" Mode="In" Type="String" />
+      <Parameter Name="locDestino" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="inserirUtilizador">
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="pp" Mode="In" Type="String" />
+      <Parameter Name="nome" Mode="In" Type="String" />
+      <Parameter Name="morada" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="removerLicitacao">
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="artigoId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="valuePorte">
+      <Parameter Name="locOrigem" Mode="In" Type="String" />
+      <Parameter Name="locDestino" Mode="In" Type="String" />
+      <Parameter Name="valorPorte" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="verificarPp">
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="pp" Mode="In" Type="String" />
+      <Parameter Name="res" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>
